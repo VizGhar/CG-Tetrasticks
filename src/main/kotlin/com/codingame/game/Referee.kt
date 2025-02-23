@@ -6,7 +6,7 @@ import com.codingame.gameengine.core.SoloGameManager
 import com.codingame.gameengine.module.entities.GraphicEntityModule
 import com.codingame.gameengine.module.entities.Sprite
 import com.google.inject.Inject
-import kotlin.math.abs
+import kotlin.random.Random
 
 val variants = mapOf(
     "F" to listOf("OOO", "O..", "OOO", "O..", "O.."),
@@ -132,10 +132,35 @@ class Referee : AbstractReferee() {
 
     private lateinit var tetraStickSprites: Map<String, Sprite>
 
+    private val initialPositions = listOf(
+        109 to 71,
+        426 to 93,
+        120 to 379,
+        426 to 531,
+        179 to 666,
+        482 to 800,
+        85 to 866,
+        1022 to 36,
+        1183 to 971,
+        1468 to 93,
+        1693 to 270,
+        1468 to 380,
+        303 to 254,
+        1771 to 106,
+        1420 to 866,
+        1574 to 541
+    ).shuffled().toMutableList()
+
     private fun initVisual() {
         graphicEntityModule.createSprite().setImage("background.jpg")
         tetraStickSprites = remainingTiles.associate { c ->
-            c.toString() to graphicEntityModule.createSprite().setImage("$c.png").setX(0).setY(0)
+            val pos = initialPositions.removeAt(0)
+            c.toString() to graphicEntityModule.createSprite().setImage("$c.png")
+                .setAnchor(0.5)
+                .setScale(0.6)
+                .setRotation(Random.nextDouble(2 * Math.PI))
+                .setX(pos.first)
+                .setY(pos.second)
         }
     }
 
@@ -153,13 +178,18 @@ class Referee : AbstractReferee() {
             true to 3 -> 0.0 to 0.0
             else -> 0.0 to 0.0
         }
-
+        sprite.setZIndex(1000)
+        graphicEntityModule.commitEntityState(0.01, sprite)
         sprite
             .setX(620 + x * 130)
             .setY(200 + y * 130)
             .setAnchorX(anchor.first)
             .setAnchorY(anchor.second)
             .setScaleX(if (flip) -1.0 else 1.0)
+            .setScaleY(1.0)
             .setRotation(Math.toRadians(90.0 * rotate))
+        graphicEntityModule.commitEntityState(0.98, sprite)
+        sprite.setZIndex(900)
+        graphicEntityModule.commitEntityState(0.99, sprite)
     }
 }
