@@ -1,0 +1,149 @@
+<div id="statement_back" class="statement_back" style="display:none"></div>
+<div class="statement-body">
+  <!-- GOAL -->
+  <div class="statement-section statement-goal">
+    <h1>
+      <span class="icon icon-goal">&nbsp;</span>
+      <span>The Goal</span>
+    </h1>
+    <div class="statement-goal-content">
+      <p>Little Jimmy had just solved some puzzle, but while he went for a champa... I mean milk... disaster struck — the game board fell to the floor! And now, only a few pieces remain correctly placed, and the rest are scattered.</p>
+<p>
+You must quickly restore the puzzle before Jimmy notices, or he'll throw a fit again! Carefully place the missing pieces to complete the shape, making sure everything fits perfectly.</p>
+    </div>
+  </div>
+
+  <div class="statement-section statement-rules">
+    <h1>
+      <span class="icon icon-rules">&nbsp;</span>
+      <span>Rules</span>
+    </h1>
+    <div>
+      <div class="statement-rules-content">
+        You will be given a board description, that have to be entirely covered using the available tetrasticks.
+        <ul>
+          <li>tetrasticks can be flipped horizontally</li>
+          <li>and/or rotated by 0°, 90°, 180°, or 270°</li>
+          <li>below is an overview of all 16 tetrasticks used in the puzzle with their respective <var>ID</var>s, partially resembling their shapes</li>
+        </ul>
+        <br>
+        
+        <p>
+          <code><strong>
+            &nbsp;<const>F</const> &nbsp; &nbsp;<const>H</const> &nbsp; &nbsp;<const>I</const> &nbsp; &nbsp;<const>J</const> &nbsp; &nbsp; <const>L</const> &nbsp; &nbsp;<const>N</const> &nbsp; &nbsp; <const>O</const> &nbsp; &nbsp; <const>P</const> &nbsp; &nbsp; <const>R</const></strong><br><br>
+            oOo &nbsp; o.. &nbsp; o &nbsp; ..o &nbsp; o.. &nbsp; o.. &nbsp; oOo &nbsp; oOo &nbsp; oOo.. <br>
+            O.. &nbsp; O.. &nbsp; O &nbsp; ..O &nbsp; O.. &nbsp; O.. &nbsp; O.O &nbsp; ..o &nbsp; ..O.. <br>
+            oOo - oOo - o - o.o - o.. - oOo - oOo - oOo - ..oOo<br>
+            O.. &nbsp; O.O &nbsp; O &nbsp; O.O &nbsp; O.. &nbsp; ..O &nbsp;  &nbsp;  &nbsp;  &nbsp; O.. &nbsp; ..O.. <br>
+            o.. &nbsp; o.o &nbsp; o &nbsp; oOo &nbsp; o.. &nbsp; ..o &nbsp;  &nbsp;  &nbsp;  &nbsp; o.. &nbsp; ..o.. <br>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; O &nbsp; &nbsp; &nbsp; &nbsp; O.. &nbsp; ..O<br>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; o &nbsp; &nbsp; &nbsp; &nbsp; oOo &nbsp; ..o<br>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; O<br>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; o<br>
+          </code>
+        </p>
+        <br><br>
+        <p>
+          <code><strong>
+            &nbsp; <const>T</const> &nbsp; &nbsp; &nbsp; <const>U</const> &nbsp; &nbsp; &nbsp; <const>V</const> &nbsp; &nbsp; &nbsp; <const>W</const> &nbsp; &nbsp; &nbsp;<const>X</const> &nbsp; &nbsp; <const>Y</const> &nbsp; &nbsp; &nbsp;<const>Z</const></strong><br><br>
+            oOoOo &nbsp; o...o &nbsp; ....o &nbsp; ..oOo &nbsp; ..o.. &nbsp; o.. &nbsp; oOo..<br>
+            ..O.. &nbsp; O...O &nbsp; ....O &nbsp; ..O.. &nbsp; ..O.. &nbsp; O.. &nbsp; ..O..<br>
+            ..o.. - oOoOo - ....o - oOo.. - oOoOo - oOo - ..o..<br>
+            ..O.. &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; ....O &nbsp; O.... &nbsp; ..O.. &nbsp; O.. &nbsp; ..O..<br>
+            ..o.. &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; oOoOo &nbsp; o.... &nbsp; ..o.. &nbsp; o.. &nbsp; ..oOo<br>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; O..<br>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; o..<br>
+          </code>
+        </p>
+        <p>
+        Symbol <const>o</const> marks space that can be shared by two tetrasticks, while symbol <const>O</const> marks space that cannot be shared with other tetrasticks. See shared spaces highlighted by red circles in image below:
+        </p>
+        
+        <div style="text-align: center; margin: 15px">
+          <img src="https://github.com/VizGhar/CG-Tetrasticks/blob/main/src/main/resources/view/assets/board_sample.png?raw=true"
+               style="width: 400px; max-width: 100%" />
+          <div style="margin: auto; width: 400px; max-width: 100%"><em>Highlighted shared parts between pairs of tetrasticks</em></div>
+        </div>
+        <p>
+          Your task is to fill board of size <const>5 x 5</const> squares or better <const>6 x 6</const> dividers with provided tetrasticks.
+          Some tetrasticks can already be placed on board. So pay attention to your input.
+        </p>
+        <p>
+          Every turn you have to place single tetrastick on board. You have to pick it by providing its <var>id</var>, whether you want to <var>flip</var> it horizontally or not, how many times you want to <var>rotate</var> the piece clockwise and where you want to place it, by providing <var>row</var> and <var>column</var>
+        </p>
+      </div>
+    </div>
+  </div>
+  <!-- EXAMPLES -->
+  <div class="statement-section statement-examples">
+    <h1>
+      <span class="icon icon-example">&nbsp;</span>
+      <span>Example</span>
+    </h1>
+
+    <div class="statement-examples-text">
+      If you want to place <const>J</const>-shaped tetrastick on board as shown in example above, you have to rotate it once and place it on position <const>0, 0</const> therefor your turn output should be exactly:<br>
+      <code><const>J 0 1 0 0</const></code><br><br>
+      Placing <const>Z</const> shaped tetrastick would require horizontal flip and position <const>2, 2</const>, so output should look like this:<br>
+      <code><const>Z 1 0 2 2</const></code><br>
+    </div>
+  </div>
+
+  <div class="statement-section statement-examples">
+    <h1>
+      <span class="icon icon-example">&nbsp;</span>
+      <span>Additional Info</span>
+    </h1>
+
+    <div class="statement-examples-text">Background image from <a href="https://www.freepik.com/free-photo/red-wooden-christmas-trees-table_3347782.htm#fromView=keyword&page=4&position=41&uuid=b7002b40-73dd-4dd9-b20b-2a32355859ad&query=Wood+Wallpaper+1920x1080">Freepik.com</a><br>
+    Source code in <a href="https://github.com/VizGhar/CG-Tetrasticks/tree/main">my GitHub repo</a><br>
+    </div>
+  </div>
+
+  <!-- PROTOCOL -->
+  <div class="statement-section statement-protocol">
+    <h1>
+      <span class="icon icon-protocol">&nbsp;</span>
+      <span>Game Input</span>
+    </h1>
+
+    <div class="blk">
+      <div class="title">Input</div>
+      <div class="text">
+        <p>Every turn you will receive current configuration in following format:</p>
+        <p><span class="statement-lineno">Line 1: </span>number <var>n</var> representing amount of remaining tetrasticks to place</p>
+        <p><span class="statement-lineno">Line 2: </span><var>n</var> space separated aliases of remaining tetrasticks</p>
+        <p><span class="statement-lineno">Line 3: </span>space separated <var>h</var> - height and <var>w</var> - width of game board</p>
+        <p><span class="statement-lineno">Following lines: </span> <var>h</var> strings of length <var>w</var> representing game board, where
+        <ul>
+          <li><const>.</const> - can be occupied
+          <li><const>space</const> - can't be occupied
+          <li><var>X</var> - already occupied by tetrastick with id = <var>X</var>
+        </ul>
+        </p>
+      </div>
+    </div>
+
+    <!-- Protocol block -->
+    <div class="blk">
+      <div class="title">Output</div>
+      <div class="text">
+        <p><span class="statement-lineno">1 Line: </span> <const>5</const> Space separated values <var>id</var>, <var>flip</var>, <var>rotations</var>, <var>row</var>, <var>column</var></p>
+        <var>id</var> - alias of tetrastick<br>
+        <var>flip</var> - <const>1</const> if tetrastick should be flipped horizontally before placing on board <const>0</const> otherwise<br>
+        <var>rotations</var> - value from interval <const><0 ; 3></const> - count of clockwise rotations<br>
+        <var>row</var> - value from interval <const><0 ; 5></const> - vertical placement<br>
+        <var>column</var> - value from interval <const><0 ; 5></const> - horizontal placement<br>
+        For example <const>H 1 2 0 3</const> will flip (<const>1</const>) horizontally h - shaped tetrastick (<const>H</const>) and rotate it <const>2</const> times clockwise. After that the tetrastick will be placed to first row and fourth column.
+        <br>
+      </div>
+    </div>
+
+    <!-- Protocol block -->
+    <div class="blk">
+      <div class="title">Constraints</div>
+      <div class="text">
+        <br>Allotted response time to output is ≤ <const>2s</const> in first turn and <const>50ms</const> in remaining turns</div>
+    </div>
+  </div>
+</div>
