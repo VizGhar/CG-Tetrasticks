@@ -4,12 +4,9 @@ import com.codingame.gameengine.core.AbstractPlayer
 import com.codingame.gameengine.core.AbstractReferee
 import com.codingame.gameengine.core.SoloGameManager
 import com.codingame.gameengine.module.entities.GraphicEntityModule
-import com.codingame.gameengine.module.entities.Group
-import com.codingame.gameengine.module.entities.Rectangle
 import com.codingame.gameengine.module.entities.Sprite
 import com.google.inject.Inject
-import kotlin.math.roundToInt
-import kotlin.random.Random
+import kotlin.math.abs
 
 val variants = mapOf(
     "F" to listOf("OOO", "O..", "OOO", "O..", "O.."),
@@ -100,7 +97,16 @@ class Referee : AbstractReferee() {
             var incorrectPlacement = false
             outer@ for (ty in tetrastickTransformedShape.indices) {
                 for (tx in tetrastickTransformedShape[0].indices) {
-                    if ((tx + ty) % 2 == 0) continue
+                    if ((tx + ty) % 2 == 0) {
+                        val current = board[y + ty][x + tx]
+                        board[y + ty][x + tx] = when {
+                            tetrastickTransformedShape[ty][tx] != 'O' -> current
+                            tx % 2 == 1 && ty % 2 == 1 -> ' '
+                            current != '.' -> '/'
+                            else -> tileName[0].lowercaseChar()
+                        }
+                        continue
+                    }
                     if (tetrastickTransformedShape[ty][tx] == '.') continue
                     if (board[y + ty][x + tx] != '.') { incorrectPlacement = true; break@outer }
                     board[y + ty][x + tx] = tileName[0]

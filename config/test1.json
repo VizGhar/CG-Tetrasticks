@@ -3,7 +3,7 @@
     "1": "Sample",
     "2": "Sample"
   },
-  "testIn": "FHIJNOPRTUVWXYZ",
+  "testIn": "FHIJNOPRTUVWXYZ\n...........\n. . . . . .\n...........\n. . . . . .\n...........\n. . . . . .\n...........\n. . . . . .\n...........\n. . . . . .\n...........",
   "isTest": "true",
   "isValidator": "false"
 }

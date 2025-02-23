@@ -60,7 +60,7 @@ You must quickly restore the puzzle before Jimmy notices, or he'll throw a fit a
         </p>
         
         <div style="text-align: center; margin: 15px">
-          <img src="https://github.com/VizGhar/CG-Tetrasticks/blob/main/src/main/resources/view/assets/board_sample.png?raw=true"
+          <img src="https://cdn-games.codingame.com/community/3996809-1740322242597/9c5fb83ebaf7e4f1f82e205e6c533aea2cf5b8a8294947a1388c3c78da53b11f.png"
                style="width: 400px; max-width: 100%" />
           <div style="margin: auto; width: 400px; max-width: 100%"><em>Highlighted shared parts between pairs of tetrasticks</em></div>
         </div>
@@ -112,12 +112,14 @@ You must quickly restore the puzzle before Jimmy notices, or he'll throw a fit a
       <div class="text">
         <p>Every turn you will receive current configuration in following format:</p>
         <p><span class="statement-lineno">Line 1: </span>number <var>n</var> representing amount of remaining tetrasticks to place</p>
-        <p><span class="statement-lineno">Line 2: </span><var>n</var> space separated aliases of remaining tetrasticks</p>
+        <p><span class="statement-lineno">Line 2: </span><var>n</var> space separated IDs of remaining tetrasticks</p>
         <p><span class="statement-lineno">Line 3: </span>space separated <var>h</var> - height and <var>w</var> - width of game board</p>
         <p><span class="statement-lineno">Following lines: </span> <var>h</var> strings of length <var>w</var> representing game board, where
         <ul>
           <li><const>.</const> - can be occupied
-          <li><const>space</const> - can't be occupied
+          <li><const>space</const> - can't be occupied - center of square
+          <li><const>/</const> - can't be occupied - already occupied by two pieces
+          <li><var>x</var> (lowercase) -  occupied by tetrastick with id = <var>x</var>, but can still can host one more
           <li><var>X</var> - already occupied by tetrastick with id = <var>X</var>
         </ul>
         </p>
@@ -129,11 +131,11 @@ You must quickly restore the puzzle before Jimmy notices, or he'll throw a fit a
       <div class="title">Output</div>
       <div class="text">
         <p><span class="statement-lineno">1 Line: </span> <const>5</const> Space separated values <var>id</var>, <var>flip</var>, <var>rotations</var>, <var>row</var>, <var>column</var></p>
-        <var>id</var> - alias of tetrastick<br>
-        <var>flip</var> - <const>1</const> if tetrastick should be flipped horizontally before placing on board <const>0</const> otherwise<br>
-        <var>rotations</var> - value from interval <const><0 ; 3></const> - count of clockwise rotations<br>
-        <var>row</var> - value from interval <const><0 ; 5></const> - vertical placement<br>
-        <var>column</var> - value from interval <const><0 ; 5></const> - horizontal placement<br>
+        <var>id</var> of tetrastick<br>
+        <var>flip</var> <const>1</const> if tetrastick should be flipped horizontally before placing on board <const>0</const> otherwise<br>
+        <var>rotations</var> from interval <const><0 ; 3></const> - count of clockwise rotations<br>
+        <var>row</var> from interval <const><0 ; 5></const> - vertical placement<br>
+        <var>column</var> from interval <const><0 ; 5></const> - horizontal placement<br>
         For example <const>H 1 2 0 3</const> will flip (<const>1</const>) horizontally h - shaped tetrastick (<const>H</const>) and rotate it <const>2</const> times clockwise. After that the tetrastick will be placed to first row and fourth column.
         <br>
       </div>
