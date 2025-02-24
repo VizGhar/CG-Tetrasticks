@@ -26,5 +26,6 @@ public class TestPlayer {
         System.out.println("Y 0 0 0 4");
         System.out.println("F 1 0 2 4");
         System.out.println("O 1 0 4 4");
+
     }
 }

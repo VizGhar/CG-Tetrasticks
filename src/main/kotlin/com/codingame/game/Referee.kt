@@ -9,22 +9,22 @@ import com.google.inject.Inject
 import kotlin.random.Random
 
 val variants = mapOf(
-    "F" to listOf("OOO", "O..", "OOO", "O..", "O.."),
-    "H" to listOf("O..", "O..", "OOO", "O.O", "O.O"),
-    "I" to listOf("O", "O", "O", "O", "O", "O", "O", "O", "O"),
-    "J" to listOf("..O", "..O", "O.O", "O.O", "OOO"),
-    "L" to listOf("O..", "O..", "O..", "O..", "O..", "O..", "OOO"),
-    "N" to listOf("O..", "O..", "OOO", "..O", "..O", "..O", "..O"),
-    "O" to listOf("OOO", "O.O", "OOO"),
-    "P" to listOf("OOO", "..O", "OOO", "O..", "O.."),
-    "R" to listOf("OOO..", "..O..", "..OOO", "..O..", "..O.."),
-    "T" to listOf("OOOOO", "..O..", "..O..", "..O..", "..O.."),
-    "U" to listOf("O...O", "O...O", "OOOOO"),
-    "V" to listOf("....O", "....O", "....O", "....O", "OOOOO"),
-    "W" to listOf("..OOO", "..O..", "OOO..", "O....", "O...."),
-    "X" to listOf("..O..", "..O..", "OOOOO", "..O..", "..O.."),
-    "Y" to listOf("O..", "O..", "OOO", "O..", "O..", "O..", "O.."),
-    "Z" to listOf("OOO..", "..O..", "..O..", "..O..", "..OOO")
+    "F" to listOf("......", "..OO..", ".O....", ".O....", "..OO..", ".O....", ".O....", "......", "......",),
+    "H" to listOf("......", "......", ".O....", ".O....", "..OO..", ".O..O.", ".O..O.", "......", "......",),
+    "I" to listOf("...", "...", ".O.", ".O.", "...", ".O.", ".O.", "...", ".O.", ".O.", "...", ".O.", ".O.", "...", "..."),
+    "J" to listOf("......", "......", "....O.", "....O.", "......", ".O..O.", ".O..O.", "..OO..", "......"),
+    "L" to listOf("......", "......", ".O....", ".O....", "......", ".O....", ".O....", "......", ".O....", ".O....", "..OO..", "....."),
+    "N" to listOf("......", "......", ".O....", ".O....", "..OO..", "....O.", "....O.", "......", "....O.", "....O.", "......", "......",),
+    "O" to listOf("......", "..OO..", ".O..O.", ".O..O.", "..OO..", "......"),
+    "P" to listOf("......","..OO..","....O.","....O.","..OO..",".O....",".O....","......","......"),
+    "R" to listOf(".........", "..OO.....", "....O....", "....O....", ".....OO..", "....O....", "....O....", ".........", "........."),
+    "T" to listOf(".........", "..OO.OO..", "....O....", "....O....", ".........", "....O....", "....O....", ".........", "........."),
+    "U" to listOf(".........", ".........", ".O.....O.", ".O.....O.", "..OO.OO..", "........."),
+    "V" to listOf(".........", ".........", ".......O.", ".......O.", ".........", ".......O.", ".......O.", "..OO.OO..", "........."),
+    "W" to listOf(".........", ".....OO..", "....O....", "....O....", "..OO.....", ".O.......", ".O.......", ".........", "........."),
+    "X" to listOf(".........", ".........", "....O....", "....O....", "..OO.OO..", "....O....", "....O....", ".........", "........."),
+    "Y" to listOf("......", "......", ".O....", ".O....", "..OO..", ".O....", ".O....", "......", ".O....", ".O....", "......", "......"),
+    "Z" to listOf(".........", "..OO.....", "....O....", "....O....", ".........", "....O....", "....O....", ".....OO..", ".........")
 )
 
 private fun transformTetrastick(shape: List<String>, flip: Boolean, rightRotations: Int): List<String> {
@@ -42,6 +42,16 @@ private fun rotateRight(shape: List<String>): List<String> {
     return rotated.map { it.toString() }
 }
 
+private fun Array<Array<Char>>.chunked(chunkSize: Int = 3): List<List<String>> {
+    val windows = mutableListOf<List<String>>()
+    for (y in indices step chunkSize) {
+        for (x in get(0).indices step chunkSize) {
+            windows += (0..<chunkSize).map{ dy -> (0..<chunkSize).map { this[y + dy][x + it] }.joinToString("") }
+        }
+    }
+    return windows
+}
+
 class Referee : AbstractReferee() {
 
     @Inject
@@ -51,7 +61,9 @@ class Referee : AbstractReferee() {
     private lateinit var graphicEntityModule: GraphicEntityModule
 
     private var remainingTiles: List<Char> = listOf()
-    private var board: Array<Array<Char>> = Array(11) { y -> Array(11) { x -> if (x % 2 == 1 && y % 2 == 1) ' ' else '.' } }
+    private var board: Array<Array<Char>> = Array(18) { Array(18) { '.' } }
+    private val h get() = board.size
+    private val w get() = board[0].size
 
     override fun init() {
         gameManager.firstTurnMaxTime = 2000
@@ -76,9 +88,9 @@ class Referee : AbstractReferee() {
             val output = gameManager.player.outputs[0].split(" ")
 
             // name, flip, rotations, x , y
-            if (output.size != 5) { gameManager.loseGame("You should provide exactly 5 values in your output - check game statement"); return }
-            if (output[0] !in variants.keys) { gameManager.loseGame("No tetrastick with name ${output[0]} exists"); return }
-            if (output[0][0] !in remainingTiles) { gameManager.loseGame("The tetrastick with name ${output[0]} was already used"); return }
+            if (output.size != 5) { gameManager.loseGame("Invalid output - check game statement"); return }
+            if (output[0] !in variants.keys) { gameManager.loseGame("Tetrastick ${output[0]} unavailable"); return }
+            if (output[0][0] !in remainingTiles) { gameManager.loseGame("Tetrastick ${output[0]} was already used"); return }
             if (output[1].toIntOrNull() == null || output[1].toInt() !in 0..1) { gameManager.loseGame("Flip (2nd part of output) can only have values of 0 or 1"); return }
             if (output[2].toIntOrNull() == null || output[2].toInt() !in 0..3) { gameManager.loseGame("Rotations (3rd part of output) can only have values of 0-3"); return }
             if (output[3].toIntOrNull() == null || output[3].toInt() !in 0..5) { gameManager.loseGame("Row (4th part of output) can only have values of 0-5"); return }
@@ -87,41 +99,40 @@ class Referee : AbstractReferee() {
             val tileName = output[0]
             val flip = output[1].toInt() == 1
             val rightRotations = output[2].toInt()
-            val y = 2 * output[3].toInt()
-            val x = 2 * output[4].toInt()
+            val y = 3 * output[3].toInt()
+            val x = 3 * output[4].toInt()
 
             // check can place
             val tetrastickDefaultShape = variants[tileName] ?: throw IllegalStateException("Won't happen")
-            val tetrastickTransformedShape = transformTetrastick(tetrastickDefaultShape, flip, rightRotations)
+            val tile = transformTetrastick(tetrastickDefaultShape, flip, rightRotations)
 
             var incorrectPlacement = false
-            outer@ for (ty in tetrastickTransformedShape.indices) {
-                for (tx in tetrastickTransformedShape[0].indices) {
-                    if ((tx + ty) % 2 == 0) {
-                        val current = board[y + ty][x + tx]
-                        board[y + ty][x + tx] = when {
-                            tetrastickTransformedShape[ty][tx] != 'O' -> current
-                            tx % 2 == 1 && ty % 2 == 1 -> ' '
-                            current != '.' -> '/'
-                            else -> tileName[0].lowercaseChar()
-                        }
-                        continue
-                    }
-                    if (tetrastickTransformedShape[ty][tx] == '.') continue
-                    if (board[y + ty][x + tx] != '.') { incorrectPlacement = true; break@outer }
-                    board[y + ty][x + tx] = tileName[0]
+            outer@ for (dy in tile.indices) {
+                for (dx in tile[0].indices) {
+                    if (y + dy !in 0..<h || x + dx !in 0..<w) { incorrectPlacement = true; break@outer } // out of bounds error
+                    if (tile[dy][dx] == 'O' && board[y + dy][x + dx] != '.') { incorrectPlacement = true; break@outer } // tetra-sticks clash error
+                    if (tile[dy][dx] == 'O') board[y + dy][x + dx] = tileName[0]
                 }
             }
 
+            // check intersections
+            for (window in board.chunked()) {
+                val val1 = window[0][1]
+                val val2 = window[1][0]
+                if (val1 == '.' || val2 == '.' || val1 == val2) continue
+                if (val1 == window[2][1] && val2 == window[1][2]) incorrectPlacement = true
+            }
+
             // run visualization
-            visualize(tileName, flip, rightRotations, x / 2, y / 2)
-            if (incorrectPlacement) { gameManager.loseGame("Place is already taken"); return }
+            visualize(tileName, flip, rightRotations, x / 3, y / 3)
+            if (incorrectPlacement) { gameManager.loseGame("Invalid placement"); return }
             remainingTiles = remainingTiles - tileName[0]
         } catch (e: AbstractPlayer.TimeoutException) {
             gameManager.loseGame("Timeout")
             return
         } catch (e: Exception) {
-            gameManager.loseGame("Invalid player output. Check game statement")
+            e.printStackTrace()
+            gameManager.loseGame("Invalid player output")
             return
         }
 
@@ -164,6 +175,7 @@ class Referee : AbstractReferee() {
         }
     }
 
+    private var finalZIndex = 900
     private fun visualize(tileName: String, flip: Boolean, rotate: Int, x: Int, y: Int) {
         val sprite = tetraStickSprites[tileName] ?: throw IllegalStateException("Error in Referee - contact author")
 
@@ -189,7 +201,7 @@ class Referee : AbstractReferee() {
             .setScaleY(1.0)
             .setRotation(Math.toRadians(90.0 * rotate))
         graphicEntityModule.commitEntityState(0.98, sprite)
-        sprite.setZIndex(900)
+        sprite.setZIndex(finalZIndex++)
         graphicEntityModule.commitEntityState(0.99, sprite)
     }
 }
