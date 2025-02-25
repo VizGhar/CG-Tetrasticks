@@ -35,7 +35,7 @@
 				</ul>
 				<br>
 
-					<details>
+					<details open>
   <summary>Visual representation of tiles</summary>
 				<p>
 					<br>
@@ -49,7 +49,8 @@
           </code>
 				</p>
 					</details>
-					<details>
+					<br>
+					<details open>
   <summary>ASCII representation of tiles as provided in input (no flip + no rotation)</summary>
 	<p>
 		<br>
@@ -95,10 +96,10 @@
 				</p>
 
 				<div style="text-align: center; margin: 15px">
-					<img src="https://cdn-games.codingame.com/community/3996809-1740322242597/9c5fb83ebaf7e4f1f82e205e6c533aea2cf5b8a8294947a1388c3c78da53b11f.png"
+					<img src="https://cdn-games.codingame.com/community/3996809-1740322242597/451a17bc3e846b7130ebca9336906b1121b27c3392508ae213008f436c7bf630.png"
                style="width: 400px; max-width: 100%" />
 					<div style="margin: auto; width: 400px; max-width: 100%">
-						<em>Red circle marks correctly shared intersection; red cross incorrect</em></div>
+						<em>Fig 1 : Red circle marks correctly shared intersection; red cross incorrect</em></div>
 				</div>
 				<p>
 					Your task is to fill a <const>5×5</const> board of squares or, more precisely, a <const>6×6</const> grid
@@ -126,22 +127,36 @@
 
 		<div class="statement-examples-text">
       <p>
-        During each game turn, you will receive a complete description of the board. Since multiple pieces can share the same intersection, each intersection is represented as a <const>3×3</const> grid.<br>
-
-For example, in the following case, the <const>F</const> piece extends downward and to the right, while the <const>R</const> piece extends to the left. This is a valid configuration because the pieces do not overlap incorrectly:
+        During each game turn, you will receive a complete description of the board. Since multiple pieces can share the same intersection, each intersection is represented as a <const>3×3</const> grid. Let's look at this intersection:<br>
+				</p>
+				<div style="text-align: center; margin: 15px">
+					<img src="https://cdn-games.codingame.com/community/3996809-1740322242597/8e0eff1eeb2593126bfd4c204d5cbfb9fece2b1f1e159ae3e5fea706964f55af.png"
+               style="width: 250px; max-width: 100%" />
+					<div style="margin: auto; width: 400px; max-width: 100%">
+						<em>Fig 2 : Example of intersection</em></div>
+				</div>
+<p>
+<const>O</const> piece extends downward and to the right, while the <const>F</const> piece extends upwards. Therefor this part of grid will look like this:
       </p>
       <p>
         <code>
-          ...<br>
-          R.F<br>
-          .F.<br>
+          .........<br>
+          ..FF.FF..<br>
+          .F..F....<br>
+          .F.<span style="color:#FF3D3D;font-weight: 900">.F.</span>...<br>
+          ...<span style="color:#FF3D3D;font-weight: 900">..O</span>O..<br>
+          ...<span style="color:#FF3D3D;font-weight: 900">.O.</span>.O.<br>
+          ....O..O.<br>
+          .....OO..<br>
+          .........<br>
         </code>
       </p>
-
 <p>
-      Below is the corresponding game board description that represents the image above (spaces added for readability):
+      
 
 </p>
+<details open>
+  <summary>Whole board as shown on Fig 1 will look like this (spaces added for readability):</summary>
       <p>
         <code>
           ... ... ... ... ... ...<br>
@@ -161,19 +176,19 @@ For example, in the following case, the <const>F</const> piece extends downward 
           ... ... .N. .Z. ... ...<br>
           <br>
           ... ... .N. .Z. ... ...<br>
-          ... ... ..Z Z.. ... ...<br>
-          ... ... ... ... ... ...<br>
+          ... ... ..Z Z.. ..O O..<br>
+          ... ... ... ... .O. .O.<br>
           <br>
-          ... ... ... ... ... ...<br>
-          ... ... ... ... ... ...<br>
+          ... ... ... ... .O. .O.<br>
+          ... ... ... ... ..O O..<br>
           ... ... ... ... ... ...<br>
           <br>
         </code>
       </p>
-
+</details>
+<br>
 			<p>
-				If you want to place <const>J</const>-shaped tetrastick on board as shown in example above, you have to
-				rotate it once and place it on position <const>0, 0</const> therefor your turn output should be
+				If you want to place <const>J</const>-shaped tetrastick on board as shown in Fig 1, you have to rotate it once and place it on position <const>0, 0</const> therefor your turn output should be
 				exactly:<br>
 				<code><const>J 0 1 0 0</const></code><br><br>
       Placing <const>Z</const>-shaped tetrastick would require horizontal flip and position <const>2, 2</const>, so output
