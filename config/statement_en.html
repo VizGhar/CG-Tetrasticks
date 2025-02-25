@@ -137,8 +137,8 @@
 						<li>The number of times you want to <var>rotate</var> it clockwise.</li>
 						<li>The <var>row</var> and <var>column</var> where you want to place it.</li>
 					</ul>
-					Make sure all pieces fit correctly within the grid!
-				</p>
+				</p>	
+				<br>Make sure all pieces fit correctly within the grid!
 			</div>
 		</div>
 	</div>
@@ -146,7 +146,37 @@
 	<div class="statement-section statement-examples">
 		<h1>
 			<span class="icon icon-example">&nbsp;</span>
-			<span>Example</span>
+			<span>Example 1 - Tetrastick transformation and placement</span>
+		</h1>
+
+		<div class="statement-examples-text">
+				<p>
+					The <const>R</const> tetrastick as shown in <i>Fig 1</i>, requires you to flip it horizontally (<var>flip</var> = <const>1</const>) and rotate it twice (<var>rotate</var> = <const>2</const>):
+				</p>
+				<p>
+					<code>
+						original &nbsp; &nbsp; h-flip &nbsp; &nbsp; rotation1 &nbsp; rotation2<br>
+						......... &nbsp; ......... &nbsp; ......... &nbsp; .........<br>
+						..RR..... &nbsp; .....RR.. &nbsp; ......... &nbsp; .........<br>
+						....R.... &nbsp; ....R.... &nbsp; ....R.... &nbsp; ....R....<br>
+						....R.... &nbsp; ....R.... &nbsp; ....R.... &nbsp; ....R....<br>
+						.....RR.. &nbsp; ..RR..... &nbsp; ..RR.RR.. &nbsp; .....RR..<br>
+						....R.... &nbsp; ....R.... &nbsp; .......R. &nbsp; ....R....<br>
+						....R.... &nbsp; ....R.... &nbsp; .......R. &nbsp; ....R....<br>
+						......... &nbsp; ......... &nbsp; ......... &nbsp; ..RR.....<br>
+						......... &nbsp; ......... &nbsp; ......... &nbsp; .........<br>
+					</code>
+				</p>
+				<p>
+					The bounding box of this tetrastick is <const>3×3</const> (see visual representation). You must specify the <var>row</var> and <var>column</var> where top-left corner of bounding box should be placed. In the example above, that would be <var>row</var> = <const>0</const> and <var>column</var> = <const>2</const></var>
+				</p>
+			</div>
+		</div>
+	<!-- EXAMPLES -->
+	<div class="statement-section statement-examples">
+		<h1>
+			<span class="icon icon-example">&nbsp;</span>
+			<span>Example - Game Board representation</span>
 		</h1>
 
 		<div class="statement-examples-text">
@@ -160,7 +190,7 @@
 						<em>Fig 2 : Example of intersection</em></div>
 				</div>
 <p>
-<const>O</const> piece extends downward and to the right, while the <const>F</const> piece extends upwards. Therefor this part of grid will look like this:
+The <const>O</const> piece extends downward and to the right, while the <const>F</const> piece extends upwards. Therefore this part of the grid will look like this:
       </p>
       <p>
         <code>
@@ -176,11 +206,10 @@
         </code>
       </p>
 <p>
-      
 
 </p>
 <details open>
-  <summary>Whole board as shown on Fig 1 will look like this (spaces added for readability):</summary>
+  <summary>The whole board as shown on <i>Fig 1</i> will look like this (spaces added for readability):</summary>
       <p>
         <code>
           ... ... ... ... ... ...<br>
@@ -212,10 +241,10 @@
 </details>
 <br>
 			<p>
-				If you want to place <const>J</const>-shaped tetrastick on board as shown in Fig 1, you have to rotate it once and place it on position <const>0, 0</const> therefor your turn output should be
+				If you want to place the <const>J</const>-shaped tetrastick on the board as shown in <i>Fig 1</i>, you have to rotate it once and place it on position <const>0, 0</const> therefore your turn output should be
 				exactly:<br>
 				<code><const>J 0 1 0 0</const></code><br><br>
-      Placing <const>Z</const>-shaped tetrastick would require horizontal flip and position <const>2, 2</const>, so output
+      Placing the <const>Z</const>-shaped tetrastick would require a horizontal flip and position <const>2, 2</const>, so output
 				should look like this:<br>
 				<code><const>Z 1 0 2 2</const></code><br>
       </p>
@@ -252,8 +281,9 @@
 					<p><span class="statement-lineno">Line 3: </span>space separated <var>h</var> - height and
 						<var>w</var> - width of game board (both always <const>18</const>)</p>
 					<p><span class="statement-lineno">Following lines: </span> <var>h</var> strings of length
-						<var>w</var> representing game board as described in example
+						<var>w</var> representing game board consisting of either <const>.</const> for an unoccupied space or a tetrastick <var>id</var> for an occupied space as described in example
 					</p>
+					
 				</div>
 			</div>
 

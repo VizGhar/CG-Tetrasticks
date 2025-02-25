@@ -2,7 +2,7 @@ gameloop
 read n:int
 read remaining:string(17)
 read h:int w:int
-loop h read line:string(w)
+loopline n line:word(18)
 write J 0 1 0 0
 
 STATEMENT
