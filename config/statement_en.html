@@ -13,7 +13,7 @@
 				knocking the board to the floor! Now, only the glued pieces remain in place, while the rest are
 				scattered.</p>
 			<p>You must quickly restore the puzzle before Jimmy notices, or he'll throw a fit again! Carefully place the
-				missing pieces to complete the shape, making sure everything fits perfectly.</p>
+				missing pieces to fill the board, making sure everything fits perfectly.</p>
 		</div>
 	</div>
 
@@ -36,7 +36,7 @@
 				<br>
 
 					<details open>
-  <summary>Visual representation of tiles</summary>
+  <summary>Visual representation of tetrasticks</summary>
 				<p>
 					<br>
 					<code><strong>
@@ -60,7 +60,7 @@
 					</details>
 					<br>
 					<details open>
-  <summary>ASCII representation of tiles as provided in input (no flip + no rotation)</summary>
+  <summary>ASCII representation of tetrasticks as provided in input (no flip + no rotation)</summary>
 	<p>
 		<br>
 	<code>
@@ -146,7 +146,7 @@
 	<div class="statement-section statement-examples">
 		<h1>
 			<span class="icon icon-example">&nbsp;</span>
-			<span>Example 1 - Tetrastick transformation and placement</span>
+			<span>Example - Tetrastick transformation and placement</span>
 		</h1>
 
 		<div class="statement-examples-text">
@@ -168,7 +168,7 @@
 					</code>
 				</p>
 				<p>
-					The bounding box of this tetrastick is <const>3×3</const> (see visual representation). You must specify the <var>row</var> and <var>column</var> where top-left corner of bounding box should be placed. In the example above, that would be <var>row</var> = <const>0</const> and <var>column</var> = <const>2</const></var>
+					The bounding box of this tetrastick is <const>2×2</const> (see <i>Fig 1</i>). You must specify the <var>row</var> and <var>column</var> where top-left corner of bounding box should be placed. In the example above, that would be <var>row</var> = <const>0</const> and <var>column</var> = <const>2</const></var>.
 				</p>
 			</div>
 		</div>
@@ -241,7 +241,7 @@ The <const>O</const> piece extends downward and to the right, while the <const>F
 </details>
 <br>
 			<p>
-				If you want to place the <const>J</const>-shaped tetrastick on the board as shown in <i>Fig 1</i>, you have to rotate it once and place it on position <const>0, 0</const> therefore your turn output should be
+				If you want to place the <const>J</const>-shaped tetrastick on the board as shown in <i>Fig 1</i>, you have to rotate it once and place it on position <const>0, 0</const>, therefore your turn output should be
 				exactly:<br>
 				<code><const>J 0 1 0 0</const></code><br><br>
       Placing the <const>Z</const>-shaped tetrastick would require a horizontal flip and position <const>2, 2</const>, so output

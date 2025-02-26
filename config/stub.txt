@@ -1,8 +1,8 @@
 gameloop
 read n:int
-read remaining:string(17)
+loopline n remaining:word(1)
 read h:int w:int
-loopline n line:word(18)
+loop h read line:string(n)
 write J 0 1 0 0
 
 STATEMENT
@@ -10,5 +10,5 @@ Place all missing tetrasticks on the board!!!
 
 INPUT
 n: amount of remaining tetrasticks to place
-remaining: IDs of remaining tetrasticks
+remaining: ID of remaining tetrastick
 line: single line of board
