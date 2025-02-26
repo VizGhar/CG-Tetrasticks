@@ -13,7 +13,7 @@ val variants = mapOf(
     "H" to listOf("......", "......", ".O....", ".O....", "..OO..", ".O..O.", ".O..O.", "......", "......",),
     "I" to listOf("...", "...", ".O.", ".O.", "...", ".O.", ".O.", "...", ".O.", ".O.", "...", ".O.", ".O.", "...", "..."),
     "J" to listOf("......", "......", "....O.", "....O.", "......", ".O..O.", ".O..O.", "..OO..", "......"),
-    "L" to listOf("......", "......", ".O....", ".O....", "......", ".O....", ".O....", "......", ".O....", ".O....", "..OO..", "....."),
+    "L" to listOf("......", "......", ".O....", ".O....", "......", ".O....", ".O....", "......", ".O....", ".O....", "..OO..", "......"),
     "N" to listOf("......", "......", ".O....", ".O....", "..OO..", "....O.", "....O.", "......", "....O.", "....O.", "......", "......",),
     "O" to listOf("......", "..OO..", ".O..O.", ".O..O.", "..OO..", "......"),
     "P" to listOf("......","..OO..","....O.","....O.","..OO..",".O....",".O....","......","......"),
@@ -65,11 +65,30 @@ class Referee : AbstractReferee() {
     private val h get() = board.size
     private val w get() = board[0].size
 
+    data class Placement(val id: String, val flip: Boolean, val rotate: Int, val x: Int, val y: Int)
+
     override fun init() {
         gameManager.firstTurnMaxTime = 2000
         gameManager.turnMaxTime = 50
         remainingTiles = gameManager.testCaseInput[0].split("").mapNotNull { it.getOrNull(0) }
-        initVisual()
+        val placed = if (gameManager.testCaseInput.size == 1) emptyList() else gameManager.testCaseInput[1].split("|").map {
+            val data = it.split(" ")
+            Placement(data[0], data[1] == "1", data[2].toInt(), data[4].toInt(), data[3].toInt())
+        }
+        forcePutOnBoard(placed)
+        initVisual(placed)
+    }
+
+    private fun forcePutOnBoard(placed: List<Placement>) {
+        for ((tileName, flip, rotate, x, y) in placed) {
+            val tetrastickDefaultShape = variants[tileName] ?: throw IllegalStateException("Won't happen")
+            val tile = transformTetrastick(tetrastickDefaultShape, flip, rotate)
+            outer@ for (dy in tile.indices) {
+                for (dx in tile[0].indices) {
+                    if (tile[dy][dx] == 'O') board[y * 3 + dy][x * 3 + dx] = tileName[0]
+                }
+            }
+        }
     }
 
     override fun gameTurn(turn: Int) {
@@ -162,9 +181,10 @@ class Referee : AbstractReferee() {
         1574 to 541
     ).shuffled().toMutableList()
 
-    private fun initVisual() {
+    private fun initVisual(placed: List<Placement>) {
         graphicEntityModule.createSprite().setImage("background.jpg")
-        tetraStickSprites = remainingTiles.associate { c ->
+        val allTiles = remainingTiles + placed.map { it.id[0] }
+        tetraStickSprites = allTiles.associate { c ->
             val pos = initialPositions.removeAt(0)
             c.toString() to graphicEntityModule.createSprite().setImage("$c.png")
                 .setAnchor(0.5)
@@ -172,6 +192,9 @@ class Referee : AbstractReferee() {
                 .setRotation(Random.nextDouble(2 * Math.PI))
                 .setX(pos.first)
                 .setY(pos.second)
+        }
+        for (tile in placed) {
+            visualize(tile.id, tile.flip, tile.rotate, tile.x, tile.y)
         }
     }
 
