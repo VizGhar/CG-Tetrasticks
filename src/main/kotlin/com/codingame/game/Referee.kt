@@ -60,6 +60,8 @@ class Referee : AbstractReferee() {
     @Inject
     private lateinit var graphicEntityModule: GraphicEntityModule
 
+    private var placements: MutableList<String> = mutableListOf()
+
     private var remainingTiles: List<Char> = listOf()
     private var board: Array<Array<Char>> = Array(18) { Array(18) { '.' } }
     private val h get() = board.size
@@ -68,10 +70,11 @@ class Referee : AbstractReferee() {
     data class Placement(val id: String, val flip: Boolean, val rotate: Int, val x: Int, val y: Int)
 
     override fun init() {
-        gameManager.firstTurnMaxTime = 2000
+        gameManager.firstTurnMaxTime = 5000
         gameManager.turnMaxTime = 50
         remainingTiles = gameManager.testCaseInput[0].split("").mapNotNull { it.getOrNull(0) }
         val placed = if (gameManager.testCaseInput.size == 1) emptyList() else gameManager.testCaseInput[1].split("|").map {
+            placements += it
             val data = it.split(" ")
             Placement(data[0], data[1] == "1", data[2].toInt(), data[4].toInt(), data[3].toInt())
         }
@@ -96,8 +99,8 @@ class Referee : AbstractReferee() {
         // input processing
         gameManager.player.sendInputLine(remainingTiles.size.toString())
         gameManager.player.sendInputLine(remainingTiles.joinToString(" "))
-        gameManager.player.sendInputLine("${board.size} ${board[0].size}")
-        board.forEach { gameManager.player.sendInputLine(it.joinToString("")) }
+        gameManager.player.sendInputLine("${placements.size}")
+        placements.forEach { gameManager.player.sendInputLine(it) }
 
         try {
             // execution
@@ -109,7 +112,7 @@ class Referee : AbstractReferee() {
             // name, flip, rotations, x , y
             if (output.size != 5) { gameManager.loseGame("Invalid output - check game statement"); return }
             if (output[0] !in variants.keys) { gameManager.loseGame("Tetrastick ${output[0]} unavailable"); return }
-            if (output[0][0] !in remainingTiles) { gameManager.loseGame("Tetrastick ${output[0]} was already used"); return }
+            if (output[0][0] !in remainingTiles) { gameManager.loseGame("Tetrastick ${output[0]} unavailable"); return }
             if (output[1].toIntOrNull() == null || output[1].toInt() !in 0..1) { gameManager.loseGame("Flip (2nd part of output) can only have values of 0 or 1"); return }
             if (output[2].toIntOrNull() == null || output[2].toInt() !in 0..3) { gameManager.loseGame("Rotations (3rd part of output) can only have values of 0-3"); return }
             if (output[3].toIntOrNull() == null || output[3].toInt() !in 0..5) { gameManager.loseGame("Row (4th part of output) can only have values of 0-5"); return }
@@ -146,6 +149,7 @@ class Referee : AbstractReferee() {
             visualize(tileName, flip, rightRotations, x / 3, y / 3)
             if (incorrectPlacement) { gameManager.loseGame("Invalid placement"); return }
             remainingTiles = remainingTiles - tileName[0]
+            placements += gameManager.player.outputs[0]
         } catch (e: AbstractPlayer.TimeoutException) {
             gameManager.loseGame("Timeout")
             return
@@ -163,22 +167,9 @@ class Referee : AbstractReferee() {
     private lateinit var tetraStickSprites: Map<String, Sprite>
 
     private val initialPositions = listOf(
-        109 to 71,
-        426 to 93,
-        120 to 379,
-        426 to 531,
-        179 to 666,
-        482 to 800,
-        85 to 866,
-        1022 to 36,
-        1183 to 971,
-        1468 to 93,
-        1693 to 270,
-        1468 to 380,
-        303 to 254,
-        1771 to 106,
-        1420 to 866,
-        1574 to 541
+        109 to 71, 426 to 93, 120 to 379, 426 to 531, 179 to 666, 482 to 800,
+        85 to 866, 1022 to 36, 1183 to 971, 1468 to 93, 1693 to 270, 1468 to 380,
+        303 to 254, 1771 to 106, 1420 to 866, 1574 to 541
     ).shuffled().toMutableList()
 
     private fun initVisual(placed: List<Placement>) {

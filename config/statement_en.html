@@ -24,107 +24,25 @@
 		</h1>
 		<div>
 			<div class="statement-rules-content">
-				You will be given a board description, that has to be entirely covered using the available tetrasticks.
-				<ul>
-					<li>each tetrastick is composed of 4 line segments</li>
-					<li>tetrasticks can share the same intersection but can't cross each other</li>
-					<li>tetrasticks can be flipped horizontally</li>
-					<li>and/or rotated by 0°, 90°, 180°, or 270°</li>
-					<li>below is an overview of all 16 tetrasticks used in the puzzle with their respective
-						<var>ID</var>s, partially resembling their shapes</li>
-				</ul>
-				<br>
-
-					<details open>
-  <summary>Visual representation of tetrasticks</summary>
 				<p>
-					<br>
-					<code><strong>
-            &nbsp;<const>F</const> &nbsp; <const>H</const> <const>I</const> &nbsp;<const>J</const> &nbsp;<const>L</const> &nbsp; <const>N</const> &nbsp; <const>O</const> &nbsp;<const>P</const> &nbsp; <const>R</const></strong><br>
-            ┌─╴&nbsp;╷&nbsp; &nbsp;╷&nbsp;&nbsp; ╷&nbsp;╷&nbsp; &nbsp;╷&nbsp; &nbsp;┌─┐&nbsp;╶─┐&nbsp;╶─┐&nbsp; <br>
-            ├─╴&nbsp;├─┐&nbsp;│&nbsp;╷ │&nbsp;│&nbsp; &nbsp;└─┐&nbsp;└─┘&nbsp;┌─┘&nbsp; &nbsp;├─╴<br>
-            ╵ &nbsp;&nbsp;╵ ╵&nbsp;│&nbsp;└─┘&nbsp;│&nbsp; &nbsp; &nbsp;│&nbsp;&nbsp;&nbsp; &nbsp;╵&nbsp;&nbsp; &nbsp; ╵&nbsp; <br>
-            &nbsp; &nbsp; &nbsp; &nbsp; │&nbsp;&nbsp;&nbsp;&nbsp; └─╴&nbsp; &nbsp;╵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;<br>
-            &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ╵<br>
-          </code>
-				</p>
-					<br>
-					<code><strong>
-            &nbsp; <const>T</const> &nbsp; &nbsp;<const>U</const> &nbsp; &nbsp; <const>V</const> &nbsp; &nbsp;<const>W</const> &nbsp; <const>X</const>&nbsp; &nbsp; <const>Y</const> &nbsp; <const>Z</const></strong><br>
-            ╶─┬─╴&nbsp;╷ &nbsp; ╷&nbsp;&nbsp; &nbsp;╷&nbsp; &nbsp;┌─╴&nbsp;&nbsp;╷&nbsp; &nbsp;╷&nbsp; &nbsp;╶─┐&nbsp;<br>
-            &nbsp; │&nbsp; &nbsp;└───┘&nbsp;&nbsp; &nbsp;│&nbsp;┌─┘&nbsp;&nbsp;╶─┼─╴&nbsp;├─╴&nbsp; &nbsp;│&nbsp;<br>
-            &nbsp; ╵&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; ╶──┘&nbsp;╵&nbsp;&nbsp; &nbsp; &nbsp;╵&nbsp; &nbsp;│&nbsp; &nbsp; &nbsp;└─╴<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;╵&nbsp;<br>
-          </code>
-				</p>
-					</details>
-					<br>
-					<details open>
-  <summary>ASCII representation of tetrasticks as provided in input (no flip + no rotation)</summary>
-	<p>
-		<br>
-	<code>
-	<const>F&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;H &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;I &nbsp; &nbsp; &nbsp;J &nbsp; &nbsp; &nbsp; &nbsp; L &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;N</const><br>
-    ...... &nbsp; ...... &nbsp; ... &nbsp; ...... &nbsp; ...... &nbsp; ......<br>
-    ..FF.. &nbsp; ...... &nbsp; ... &nbsp; ...... &nbsp; ...... &nbsp; ......<br>
-	.F.... &nbsp; .H.... &nbsp; .I. &nbsp; ....J. &nbsp; .L.... &nbsp; .N....<br>
-	.F.... &nbsp; .H.... &nbsp; .I. &nbsp; ....J. &nbsp; .L.... &nbsp; .N....<br>
-	..FF.. &nbsp; ..HH.. &nbsp; ... &nbsp; ...... &nbsp; ...... &nbsp; ..NN..<br>
-	.F.... &nbsp; .H..H. &nbsp; .I. &nbsp; .J..J. &nbsp; .L.... &nbsp; ....N.<br>
-	.F.... &nbsp; .H..H. &nbsp; .I. &nbsp; .J..J. &nbsp; .L.... &nbsp; ....N.<br>
-	...... &nbsp; ...... &nbsp; ... &nbsp; ..JJ.. &nbsp; ...... &nbsp; ......<br>
-	...... &nbsp; ...... &nbsp; .I. &nbsp; ...... &nbsp; .L.... &nbsp; ....N.<br>
-	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .I. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.L.... &nbsp; ....N.<br>
-	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ... &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;..LL.. &nbsp; ......<br>
-	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .I. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;...... &nbsp; ......<br>
-	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .I.<br>
-	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ...<br>
-	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ...<br>
-	</code>
-	</p>
-    <p>
-        <br>
-        <code>
-            <const>O &nbsp; &nbsp; &nbsp; &nbsp; P &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;R &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; T&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;U</const><br>
-            ...... &nbsp; ...... &nbsp; ......... &nbsp; ......... &nbsp; .........<br>
-            ..OO.. &nbsp; ..PP.. &nbsp; ..RR..... &nbsp; ..TT.TT.. &nbsp; .........<br>
-            .O..O. &nbsp; ....P. &nbsp; ....R.... &nbsp; ....T.... &nbsp; .U.....U.<br>
-            .O..O. &nbsp; ....P. &nbsp; ....R.... &nbsp; ....T.... &nbsp; .U.....U.<br>
-            ..OO.. &nbsp; ..PP.. &nbsp; .....RR.. &nbsp; ......... &nbsp; ..UU.UU..<br>
-            ...... &nbsp; .P.... &nbsp; ....R.... &nbsp; ....T.... &nbsp; .........<br>
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.P.... &nbsp; ....R.... &nbsp; ....T....<br>
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;...... &nbsp; ......... &nbsp; .........<br>
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;...... &nbsp; ......... &nbsp; .........<br>
-        </code>
-    </p>
-	<p>
-<code>
-	<const>V &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; W &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; X &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Y &nbsp; &nbsp; &nbsp; &nbsp; Z</const><br>
-......... &nbsp; ......... &nbsp; ......... &nbsp; ...... &nbsp; .........<br>
-......... &nbsp; .....WW.. &nbsp; ......... &nbsp; ...... &nbsp; ..ZZ.....<br>
-.......V. &nbsp; ....W.... &nbsp; ....X.... &nbsp; .Y.... &nbsp; ....Z....<br>
-.......V. &nbsp; ....W.... &nbsp; ....X.... &nbsp; .Y.... &nbsp; ....Z....<br>
-......... &nbsp; ..WW..... &nbsp; ..XX.XX.. &nbsp; ..YY.. &nbsp; .........<br>
-.......V. &nbsp; .W....... &nbsp; ....X.... &nbsp; .Y.... &nbsp; ....Z....<br>
-.......V. &nbsp; .W....... &nbsp; ....X.... &nbsp; .Y.... &nbsp; ....Z....<br>
-..VV.VV.. &nbsp; ......... &nbsp; ......... &nbsp; ...... &nbsp; .....ZZ..<br>
-......... &nbsp; ......... &nbsp; ......... &nbsp; .Y.... &nbsp; .........<br>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .Y....<br>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ......<br>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ......
-</code>
-	</p>
-</details>
-				</p>
-				<p>
+					You will be given the description of a board, that has to be entirely covered using the available tetrasticks.
+					<ul>
+						<li>each tetrastick is composed of 4 line segments</li>
+						<li>tetrasticks can share the same intersection but can't cross each other</li>
+						<li>tetrasticks can be flipped horizontally</li>
+						<li>and/or rotated by 0°, 90°, 180°, or 270°</li>
+						<li>below is an overview of all 16 tetrasticks used in the puzzle with their respective
+							<var>ID</var>s, partially resembling their shapes</li>
+					</ul>
 				</p>
 
 				<div style="text-align: center; margin: 15px">
-					<img src="https://cdn-games.codingame.com/community/3996809-1740322242597/451a17bc3e846b7130ebca9336906b1121b27c3392508ae213008f436c7bf630.png"
+					<img src="https://cdn-games.codingame.com/community/3996809-1740322242597/182f7d0e5fa085c490a43971fd72b329779af4dc144288cdde93b9ab722888ec.png"
                style="width: 400px; max-width: 100%" />
 					<div style="margin: auto; width: 400px; max-width: 100%">
-						<em>Fig 1 : Red circle marks correctly shared intersection; red cross incorrect</em></div>
+						<em>Fig 1 : Visual representation of tetrasticks (no flip + no rotation)</em></div>
 				</div>
+
 				<p>
 					Your task is to fill a <const>5×5</const> board of squares or, more precisely, a <const>6×6</const> grid
 					of edges using the provided tetrasticks. Some tetrasticks may already be glued to the board, so pay
@@ -139,117 +57,41 @@
 					</ul>
 				</p>	
 				<br>Make sure all pieces fit correctly within the grid!
-			</div>
-		</div>
-	</div>
-	<!-- EXAMPLES -->
-	<div class="statement-section statement-examples">
-		<h1>
-			<span class="icon icon-example">&nbsp;</span>
-			<span>Example - Tetrastick transformation and placement</span>
-		</h1>
 
-		<div class="statement-examples-text">
-				<p>
-					The <const>R</const> tetrastick as shown in <i>Fig 1</i>, requires you to flip it horizontally (<var>flip</var> = <const>1</const>) and rotate it twice (<var>rotate</var> = <const>2</const>):
-				</p>
-				<p>
-					<code>
-						original &nbsp; &nbsp; h-flip &nbsp; &nbsp; rotation1 &nbsp; rotation2<br>
-						......... &nbsp; ......... &nbsp; ......... &nbsp; .........<br>
-						..RR..... &nbsp; .....RR.. &nbsp; ......... &nbsp; .........<br>
-						....R.... &nbsp; ....R.... &nbsp; ....R.... &nbsp; ....R....<br>
-						....R.... &nbsp; ....R.... &nbsp; ....R.... &nbsp; ....R....<br>
-						.....RR.. &nbsp; ..RR..... &nbsp; ..RR.RR.. &nbsp; .....RR..<br>
-						....R.... &nbsp; ....R.... &nbsp; .......R. &nbsp; ....R....<br>
-						....R.... &nbsp; ....R.... &nbsp; .......R. &nbsp; ....R....<br>
-						......... &nbsp; ......... &nbsp; ......... &nbsp; ..RR.....<br>
-						......... &nbsp; ......... &nbsp; ......... &nbsp; .........<br>
-					</code>
-				</p>
-				<p>
-					The bounding box of this tetrastick is <const>2×2</const> (see <i>Fig 1</i>). You must specify the <var>row</var> and <var>column</var> where top-left corner of bounding box should be placed. In the example above, that would be <var>row</var> = <const>0</const> and <var>column</var> = <const>2</const></var>.
-				</p>
-			</div>
-		</div>
-	<!-- EXAMPLES -->
-	<div class="statement-section statement-examples">
-		<h1>
-			<span class="icon icon-example">&nbsp;</span>
-			<span>Example - Game Board representation</span>
-		</h1>
-
-		<div class="statement-examples-text">
-      <p>
-        During each game turn, you will receive a complete description of the board. Since multiple pieces can share the same intersection, each intersection is represented as a <const>3×3</const> grid. Let's look at this intersection:<br>
-				</p>
 				<div style="text-align: center; margin: 15px">
-					<img src="https://cdn-games.codingame.com/community/3996809-1740322242597/8e0eff1eeb2593126bfd4c204d5cbfb9fece2b1f1e159ae3e5fea706964f55af.png"
-               style="width: 250px; max-width: 100%" />
+					<img src="https://cdn-games.codingame.com/community/3996809-1740322242597/451a17bc3e846b7130ebca9336906b1121b27c3392508ae213008f436c7bf630.png"
+               style="width: 400px; max-width: 100%" />
 					<div style="margin: auto; width: 400px; max-width: 100%">
-						<em>Fig 2 : Example of intersection</em></div>
+						<em>Fig 2 : Red circle marks correctly shared intersection; red cross incorrect</em></div>
 				</div>
-<p>
-The <const>O</const> piece extends downward and to the right, while the <const>F</const> piece extends upwards. Therefore this part of the grid will look like this:
-      </p>
-      <p>
-        <code>
-          .........<br>
-          ..FF.FF..<br>
-          .F..F....<br>
-          .F.<span style="color:#FF3D3D;font-weight: 900">.F.</span>...<br>
-          ...<span style="color:#FF3D3D;font-weight: 900">..O</span>O..<br>
-          ...<span style="color:#FF3D3D;font-weight: 900">.O.</span>.O.<br>
-          ....O..O.<br>
-          .....OO..<br>
-          .........<br>
-        </code>
-      </p>
-<p>
-
-</p>
-<details open>
-  <summary>The whole board as shown on <i>Fig 1</i> will look like this (spaces added for readability):</summary>
-      <p>
-        <code>
-          ... ... ... ... ... ...<br>
-          ..J J.. ... ..V V.V V..<br>
-          .J. ... ... .R. .Y. .V.<br>
-          <br>
-          .J. ... ... .R. .Y. .V.<br>
-          ..J J.J J.. ..R R.Y Y..<br>
-          ... .N. ... .R. .Y. .V.<br>
-          <br>
-          ... .N. ... .R. .Y. .V.<br>
-          ... ..N N.R R.Z Z.. ...<br>
-          ... ... .N. .Z. .Y. ...<br>
-          <br>
-          ... ... .N. .Z. .Y. ...<br>
-          ..I I.I I.I I.I I.. ...<br>
-          ... ... .N. .Z. ... ...<br>
-          <br>
-          ... ... .N. .Z. ... ...<br>
-          ... ... ..Z Z.. ..O O..<br>
-          ... ... ... ... .O. .O.<br>
-          <br>
-          ... ... ... ... .O. .O.<br>
-          ... ... ... ... ..O O..<br>
-          ... ... ... ... ... ...<br>
-          <br>
-        </code>
-      </p>
-</details>
-<br>
-			<p>
-				If you want to place the <const>J</const>-shaped tetrastick on the board as shown in <i>Fig 1</i>, you have to rotate it once and place it on position <const>0, 0</const>, therefore your turn output should be
-				exactly:<br>
-				<code><const>J 0 1 0 0</const></code><br><br>
-      Placing the <const>Z</const>-shaped tetrastick would require a horizontal flip and position <const>2, 2</const>, so output
-				should look like this:<br>
-				<code><const>Z 1 0 2 2</const></code><br>
-      </p>
+			</div>
 		</div>
 	</div>
+	<!-- EXAMPLES -->
+	<div class="statement-section statement-examples">
+		<h1>
+			<span class="icon icon-example">&nbsp;</span>
+			<span>Example</span>
+		</h1>
+
+		<div class="statement-examples-text">
+				<p>
+					The <const>R</const> tetrastick as shown in <i>Fig 2</i>, requires you to flip it horizontally (<var>flip</var> = <const>1</const>) and rotate it twice (<var>rotate</var> = <const>2</const>):
+				</p>
+					<div style="text-align: center; margin: 15px">
+					<img src="https://cdn-games.codingame.com/community/3996809-1740322242597/0dfd28a026ce147ac057df8f01f1d789e75705435831124b8fdbda90375a508b.png"
+               style="width: 400px; max-width: 100%" />
+					<div style="margin: auto; width: 400px; max-width: 100%">
+						<em>Fig 3 : Tetrastick transformation</em></div>
+				</div>
+				<p>
+					The bounding box of this tetrastick is <const>2×2</const>. The <var>row</var> and <var>column</var> values represent the position of the top-left corner of the bounding box. In the example above, that would be <var>row</var> = <const>0</const> and <var>column</var> = <const>2</const>.</p>
+					<p>A tetrastick placement is described using its  <var>id</var>, <var>flip</var>, <var>rotate</var>, <var>row</var> and <var>column</var> separated by space. For example: <const>R 1 2 0 2</const>
+				<p>
+				At the beginning of each turn, you will receive a complete description of the board, which consists of the placement descriptions of all already placed tetrasticks. At the end of your turn, you must output the placement description of a single tetrastick.
+				</p>
+			</div>
+		</div>
 
 	<div class="statement-section statement-examples">
 		<h1>
@@ -260,6 +102,7 @@ The <const>O</const> piece extends downward and to the right, while the <const>F
 		<div class="statement-examples-text">Background image from <a
 				href="https://www.freepik.com/free-photo/red-wooden-christmas-trees-table_3347782.htm#fromView=keyword&page=4&position=41&uuid=b7002b40-73dd-4dd9-b20b-2a32355859ad&query=Wood+Wallpaper+1920x1080">Freepik.com</a><br>
     Source code in <a href="https://github.com/VizGhar/CG-Tetrasticks/tree/main">my GitHub repo</a><br>
+		Have a look at this <a href="https://www.codingame.com/playgrounds/156252/algorithm-x">great tutorial on Algorithm X</a> by <a href="https://www.codingame.com/profile/2df7157da821f39bbf6b36efae1568142907334">Timinator</a>
     </div>
 		</div>
 
@@ -274,14 +117,13 @@ The <const>O</const> piece extends downward and to the right, while the <const>F
 				<div class="title">Input</div>
 				<div class="text">
 					<p>Every turn you will receive current configuration in following format:</p>
-					<p><span class="statement-lineno">Line 1: </span>number <var>n</var> representing amount of
+					<p><span class="statement-lineno">Line 1: </span>number <var>m</var> representing amount of
 						remaining tetrasticks to place</p>
-					<p><span class="statement-lineno">Line 2: </span><var>n</var> space separated IDs of remaining
+					<p><span class="statement-lineno">Line 2: </span><var>m</var> space separated IDs of remaining
 						tetrasticks</p>
-					<p><span class="statement-lineno">Line 3: </span>space separated <var>h</var> - height and
-						<var>w</var> - width of game board (both always <const>18</const>)</p>
-					<p><span class="statement-lineno">Following lines: </span> <var>h</var> strings of length
-						<var>w</var> representing game board consisting of either <const>.</const> for an unoccupied space or a tetrastick <var>id</var> for an occupied space as described in example
+					<p><span class="statement-lineno">Line 3: </span>number <var>n</var> representing amount of
+						tetrasticks already placed on board</p>
+					<p><span class="statement-lineno">Following <var>n</var> lines: </span> already placed tetrasticks as described in the example. For example: <const>R 1 2 0 2</const> (<var>id</var>, <var>flip</var>, <var>rotate</var>, <var>row</var>, <var>column</var>)
 					</p>
 					
 				</div>
@@ -306,9 +148,8 @@ The <const>O</const> piece extends downward and to the right, while the <const>F
 					<var>column</var> from interval <const>
 						<0 ; 5>
 					</const> - horizontal placement<br>
-        For example <const>H 1 2 0 3</const> will flip (<const>1</const>) horizontally h-shaped tetrastick (<const>H
-					</const>) and rotate it <const>2</const> times clockwise. After that the tetrastick will be placed
-					on first row and fourth column.
+        For example <const>H 1 2 0 3</const> will flip (<const>1</const>) horizontally h-shaped tetrastick (<const>H</const>) and rotate it <const>2</const> times clockwise. After that the tetrastick will be placed
+					on <const>0</const>th row and <const>3</const>rd column.
 					<br>
       </div>
 				</div>
@@ -317,7 +158,7 @@ The <const>O</const> piece extends downward and to the right, while the <const>F
 				<div class="blk">
 					<div class="title">Constraints</div>
 					<div class="text">
-						<br>Allotted response time to output is ≤ <const>2s</const> in first turn and <const>50ms
+						<br>Allotted response time to output is ≤ <const>5s</const> in first turn and <const>50ms
 						</const> in remaining turns</div>
 				</div>
 			</div>
